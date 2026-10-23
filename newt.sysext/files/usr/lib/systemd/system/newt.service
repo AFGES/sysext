@@ -1,0 +1,20 @@
+[Unit]
+Description=Newt - Pangolin tunnel client
+Documentation=https://docs.pangolin.net/manage/sites/install-site
+Wants=network-online.target
+After=network-online.target
+ConditionFileNotEmpty=/etc/newt/newt.env
+
+[Service]
+Type=simple
+User=root
+Group=root
+EnvironmentFile=/etc/newt/newt.env
+ExecStart=/usr/bin/newt
+Restart=always
+RestartSec=2
+UMask=0077
+PrivateTmp=true
+
+[Install]
+UpheldBy=multi-user.target
