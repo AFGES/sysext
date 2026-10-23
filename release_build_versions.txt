@@ -19,7 +19,7 @@
 
 pangolin-cli latest
 
-lldpd latest
+lldpd 1.0.22-1
 
 doco-cd latest
 
