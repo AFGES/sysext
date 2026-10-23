@@ -20,7 +20,7 @@ concurrency:
   cancel-in-progress: true
 
 env:
-  EXTENSIONS: "pangolin-cli lldpd doco-cd"
+  EXTENSIONS: "pangolin-cli lldpd doco-cd newt"
 
 jobs:
   deploy:
