@@ -1,0 +1,23 @@
+[Unit]
+Description=doco-cd - GitOps for Docker Compose
+Documentation=https://doco.cd/
+Requires=docker.service
+Wants=network-online.target
+After=network-online.target docker.service
+ConditionFileNotEmpty=/etc/doco-cd/doco-cd.env
+
+[Service]
+Type=simple
+User=root
+Group=root
+EnvironmentFile=/etc/doco-cd/doco-cd.env
+# Without a container to inspect, doco-cd needs the data mount given explicitly.
+Environment=DATA_MOUNT_PATH=/var/lib/doco-cd
+Environment=DATA_HOST_PATH=/var/lib/doco-cd
+StateDirectory=doco-cd
+ExecStart=/usr/bin/doco-cd
+Restart=on-failure
+RestartSec=5
+
+[Install]
+UpheldBy=multi-user.target
