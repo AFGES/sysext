@@ -1,0 +1,54 @@
+name: Publish extensions to GitHub Pages
+
+# Lays out bakery releases as a flat tree for systemd-sysupdate:
+#   extensions/<ext>/SHA256SUMS + extensions/<ext>/<ext>-<ver>-<arch>.raw
+#   extensions/<ext>.conf
+
+on:
+  workflow_dispatch:
+  workflow_run:
+    workflows: ["Check for new / missing upstream releases and dispatch builds"]
+    types: [completed]
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+env:
+  EXTENSIONS: "pangolin-cli"
+
+jobs:
+  deploy:
+    runs-on: ubuntu-24.04
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Collect release assets
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          set -euo pipefail
+          for ext in ${EXTENSIONS}; do
+            dir="site/extensions/${ext}"
+            mkdir -p "${dir}"
+            # Per-extension metadata release: SHA256SUMS and sysupdate .conf
+            gh release download "${ext}" -R "${GITHUB_REPOSITORY}" -p SHA256SUMS -D "${dir}"
+            gh release download "${ext}" -R "${GITHUB_REPOSITORY}" -p '*.conf' -D site/extensions
+            # Images: only versions listed in SHA256SUMS
+            for tag in $(gh release list -R "${GITHUB_REPOSITORY}" --limit 200 --json tagName -q '.[].tagName' | grep -E "^${ext}-"); do
+              gh release download "${tag}" -R "${GITHUB_REPOSITORY}" -p '*.raw' -D "${dir}" || true
+            done
+          done
+
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: site
+
+      - id: deployment
+        uses: actions/deploy-pages@v4
