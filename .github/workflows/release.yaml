@@ -7,7 +7,7 @@ on:
         description: 'branch to build'
         type: string
         required: false
-        default: 'main'
+        default: 'afges-fork'
   schedule:
     # Each day at 5am UTC
     - cron:  '0 5 * * *'
@@ -21,7 +21,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
-          ref: ${{ inputs.branch != '' && inputs.branch || 'main' }}
+          ref: ${{ inputs.branch != '' && inputs.branch || 'afges-fork' }}
           path: bakery
 
       - name: install prerequisites
@@ -67,7 +67,7 @@ jobs:
       - name: Check out the bakery repo
         uses: actions/checkout@v4
         with:
-          ref: ${{ inputs.branch != '' && inputs.branch || 'main' }}
+          ref: ${{ inputs.branch != '' && inputs.branch || 'afges-fork' }}
           path: bakery
 
       - name: install prerequisites
@@ -116,7 +116,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
-          ref: ${{ inputs.branch != '' && inputs.branch || 'main' }}
+          ref: ${{ inputs.branch != '' && inputs.branch || 'afges-fork' }}
           path: bakery
 
       - name: install prerequisites
@@ -157,7 +157,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
-          ref: ${{ inputs.branch != '' && inputs.branch || 'main' }}
+          ref: ${{ inputs.branch != '' && inputs.branch || 'afges-fork' }}
           path: bakery
 
       - name: install prerequisites
