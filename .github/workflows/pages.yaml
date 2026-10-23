@@ -47,6 +47,26 @@ jobs:
             cp "tmp/${ext}.conf" site/extensions/
           done
 
+          # Browsable indexes: site root (prefix extensions/) and extensions/ (no prefix)
+          make_index() {
+            local prefix="$1" out="$2"
+            {
+              echo '<!doctype html><meta charset="utf-8"><title>sysext extensions</title>'
+              echo '<h1>sysext extensions</h1><ul>'
+              for ext in ${EXTENSIONS}; do
+                echo "<li><b>${ext}</b>: <a href=\"${prefix}${ext}.conf\">${ext}.conf</a>, <a href=\"${prefix}${ext}/SHA256SUMS\">SHA256SUMS</a><ul>"
+                for raw in "site/extensions/${ext}"/*.raw; do
+                  raw="$(basename "${raw}")"
+                  echo "<li><a href=\"${prefix}${ext}/${raw}\">${raw}</a></li>"
+                done
+                echo '</ul></li>'
+              done
+              echo '</ul>'
+            } > "${out}"
+          }
+          make_index "extensions/" site/index.html
+          make_index "" site/extensions/index.html
+
       - uses: actions/upload-pages-artifact@v3
         with:
           path: site
