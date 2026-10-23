@@ -85,7 +85,8 @@ else
   out ""
   out "Updated $(date --rfc-3339 seconds)"
 
-  for extension in $(./bakery.sh list --plain true); do
+  # Only extensions listed in release_build_versions.txt have releases in this fork.
+  for extension in $(sed -n 's/^\([^# ][^ ]*\) .*/\1/p' release_build_versions.txt | sort -u); do
     echo
     fetch_artefacts "$extension"
     if [[ ! -f SHA256SUMS ]] ; then
