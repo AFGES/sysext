@@ -78,6 +78,7 @@ Check out documentation on specific extensions at the navigation menu on the lef
 | `k3s`            |  released    | [k3s versions](https://github.com/flatcar/sysext-bakery/releases/tag/k3s) |
 | `kata-containers` |  released  | [kata-containers versions](https://github.com/flatcar/sysext-bakery/releases/tag/kata-containers) |
 | `keepalived`     |  released    | [keepalived versions](https://github.com/flatcar/sysext-bakery/releases/tag/keepalived) |
+| `lldpd`          |  released    | [lldpd versions](https://github.com/flatcar/sysext-bakery/releases/tag/lldpd) |
 | `kubernetes`     |  released    | [kubernetes versions](https://github.com/flatcar/sysext-bakery/releases/tag/kubernetes) |
 | `llamaedge`      |  released    | [llamaedge versions](https://github.com/flatcar/sysext-bakery/releases/tag/llamaedge) |
 | `nebula`         |  released    | [nebula versions](https://github.com/flatcar/sysext-bakery/releases/tag/nebula) |

@@ -1,0 +1,21 @@
+[Unit]
+Description=LLDP daemon
+Documentation=man:lldpd(8)
+After=network.target
+
+[Service]
+Type=notify
+NotifyAccess=main
+EnvironmentFile=-/etc/default/lldpd
+EnvironmentFile=-/etc/sysconfig/lldpd
+ExecStart=/usr/bin/lldpd $DAEMON_ARGS $LLDPD_OPTIONS
+Restart=on-failure
+RuntimeDirectory=lldpd
+PrivateTmp=yes
+ProtectHome=yes
+ProtectKernelTunables=no
+ProtectControlGroups=yes
+ProtectKernelModules=yes
+
+[Install]
+WantedBy=multi-user.target

@@ -18,3 +18,7 @@
 #
 
 pangolin-cli latest
+
+lldpd latest
+
+doco-cd latest
