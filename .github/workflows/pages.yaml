@@ -36,14 +36,15 @@ jobs:
           set -euo pipefail
           for ext in ${EXTENSIONS}; do
             dir="site/extensions/${ext}"
-            mkdir -p "${dir}"
-            # Per-extension metadata release: SHA256SUMS and sysupdate .conf
-            gh release download "${ext}" -R "${GITHUB_REPOSITORY}" -p SHA256SUMS -D "${dir}"
-            gh release download "${ext}" -R "${GITHUB_REPOSITORY}" -p '*.conf' -D site/extensions
-            # Images: only versions listed in SHA256SUMS
+            mkdir -p "${dir}" tmp
+            # Aggregate from per-version releases (<ext>-<ver>): each ships
+            # its images, a SHA256SUMS and the sysupdate .conf.
             for tag in $(gh release list -R "${GITHUB_REPOSITORY}" --limit 200 --json tagName -q '.[].tagName' | grep -E "^${ext}-"); do
-              gh release download "${tag}" -R "${GITHUB_REPOSITORY}" -p '*.raw' -D "${dir}" || true
+              gh release download "${tag}" -R "${GITHUB_REPOSITORY}" -p '*.raw' -D "${dir}"
+              gh release download "${tag}" -R "${GITHUB_REPOSITORY}" -p SHA256SUMS -O - >> "${dir}/SHA256SUMS"
+              gh release download "${tag}" -R "${GITHUB_REPOSITORY}" -p '*.conf' -D tmp --clobber
             done
+            cp "tmp/${ext}.conf" site/extensions/
           done
 
       - uses: actions/upload-pages-artifact@v3
