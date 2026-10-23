@@ -35,6 +35,7 @@ function populate_sysext_root() {
                   /install_root/build.sh "${version}" "$user_group"
 
   # /usr/sbin is a symlink to /usr/bin on Flatcar.
+  mkdir -p usr/bin
   mv usr/sbin/* usr/bin/
   rmdir usr/sbin
   cp -aR usr "${sysextroot}"/
