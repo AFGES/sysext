@@ -8,6 +8,8 @@ Type=notify
 NotifyAccess=main
 EnvironmentFile=-/etc/default/lldpd
 EnvironmentFile=-/etc/sysconfig/lldpd
+# systemd-sysext refresh does not run sysusers, so create _lldpd before the daemon drops privileges
+ExecStartPre=/usr/bin/systemd-sysusers /usr/lib/sysusers.d/lldpd.conf
 ExecStart=/usr/bin/lldpd $DAEMON_ARGS $LLDPD_OPTIONS
 Restart=on-failure
 RuntimeDirectory=lldpd
