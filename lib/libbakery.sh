@@ -10,8 +10,8 @@
 libroot="$(dirname "${BASH_SOURCE[0]}")"
 scriptroot="$(cd "$(dirname "${BASH_SOURCE[0]}")/../"; pwd)"
 
-bakery="afges/sysext-bakery"
-bakery_hub="afges.github.io/sysext-bakery"
+bakery="afges/sysext"
+bakery_hub="afges.github.io/sysext"
 
 if [[ -s "${scriptroot}/.env" ]]; then
   source "${scriptroot}/.env"

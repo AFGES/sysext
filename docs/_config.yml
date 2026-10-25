@@ -1,6 +1,6 @@
 title: sysext-bakery 
 description: sysext-bakery documentation
-baseurl: "/sysext-bakery"
+baseurl: "/sysext"
 url: "https://flatcar.github.io"
 permalink: /:title/
 markdown: kramdown
