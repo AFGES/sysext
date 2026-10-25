@@ -19,8 +19,6 @@
 
 pangolin-cli latest
 
-lldpd 1.0.22-2
-
 doco-cd latest
 
 newt latest
